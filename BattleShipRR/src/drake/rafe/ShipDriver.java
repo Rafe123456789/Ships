@@ -19,6 +19,7 @@ public class ShipDriver extends Application {
 		// TODO Auto-generated method stub
 		VBox root = new VBox();
 		
+		// hello
 		GridPane topGrid = new GridPane();
 		
 		for (int i = 0; i < 10; i++) {
