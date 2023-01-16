@@ -23,7 +23,11 @@ public class ShipDriver extends Application {
 		VBox root2 = new VBox();
 		VBox root3 = new VBox();
 		root1.setPrefWidth(150);
+		root3.setPrefWidth(150);
 		root.getChildren().addAll(root1, root2, root3);
+		
+		root1.setStyle("-fx-background-color: #00bfff");
+		root3.setStyle("-fx-background-color: #00bfff");
 		
 		// hello
 		GridPane topGrid = new GridPane();
@@ -31,7 +35,7 @@ public class ShipDriver extends Application {
 		for (int i = 0; i < 10; i++) {
 			for (int l = 0; l < 10; l++) {
 				Button b = new Button();
-				b.setStyle("-fx-background-color: #00bfff; -fx-border-color: #708B8F");
+				b.setStyle("-fx-background-color: #00bfff; -fx-border-color: #000000");
 				b.setPrefSize(40, 40);
 				System.out.println();
 				topGrid.add(b, i, l);
@@ -45,13 +49,14 @@ public class ShipDriver extends Application {
 		for (int i = 0; i < 10; i++) {
 			for (int l = 0; l < 10; l++) {
 				Button b = new Button();
-				b.setStyle("-fx-background-color: #00bfff; -fx-border-color: #708B8F");
+				b.setStyle("-fx-background-color: #00bfff; -fx-border-color: #000000");
 				b.setPrefSize(40, 40);
 				System.out.println();
 				botGrid.add(b, i, l);
 			}
 		}
-		Rectangle tx = new Rectangle(400, 100);
+		Rectangle tx = new Rectangle(400, 100, Color.rgb(0, 191, 255));
+		
 		root2.getChildren().add(tx);
 		root2.getChildren().add(botGrid);
 		root2.setLayoutX(150);
