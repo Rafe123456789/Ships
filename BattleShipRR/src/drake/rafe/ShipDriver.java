@@ -31,7 +31,7 @@ public class ShipDriver extends Application {
 		for (int i = 0; i < 10; i++) {
 			for (int l = 0; l < 10; l++) {
 				Button b = new Button();
-				b.setStyle("-fx-background-color: #00bfff");
+				b.setStyle("-fx-background-color: #00bfff; -fx-border-color: #708B8F");
 				b.setPrefSize(40, 40);
 				System.out.println();
 				topGrid.add(b, i, l);
@@ -45,6 +45,7 @@ public class ShipDriver extends Application {
 		for (int i = 0; i < 10; i++) {
 			for (int l = 0; l < 10; l++) {
 				Button b = new Button();
+				b.setStyle("-fx-background-color: #00bfff; -fx-border-color: #708B8F");
 				b.setPrefSize(40, 40);
 				System.out.println();
 				botGrid.add(b, i, l);
