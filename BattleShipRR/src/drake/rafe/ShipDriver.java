@@ -66,7 +66,9 @@ public class ShipDriver extends Application {
 		//Make ships
 		VBox ship2 = new VBox();
 		Button a = new Button();
+		
 		Button b = new Button();
+		
 		ship2.getChildren().addAll(a,b);
 		
 		VBox ship3a = new VBox();
@@ -86,6 +88,10 @@ public class ShipDriver extends Application {
 		Button b3 = new Button();
 		Button c3 = new Button();
 		ship3c.getChildren().addAll(a3,b3,c3);
+		
+		root1.getChildren().addAll(ship2,  ship3a, ship3b, ship3c);
+		
+		root1.setSpacing(200);
 		
 		VBox ship4a = new VBox();
 		Button a4 = new Button();
@@ -109,8 +115,9 @@ public class ShipDriver extends Application {
 		Button e6 = new Button();
 		ship5.getChildren().addAll(a6,b6,c6,d6,e6);
 		
+		root3.getChildren().addAll(ship4a,  ship4b, ship5);
 		
-		
+		root3.setSpacing(250);
 		
 		
 		stage.setScene(scene);
