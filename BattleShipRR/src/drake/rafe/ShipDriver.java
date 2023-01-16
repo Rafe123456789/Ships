@@ -76,27 +76,27 @@ public class ShipDriver extends Application {
 		Button c3 = new Button();
 		ship3c.getChildren().addAll(a3,b3,c3);
 		
-		VBox space4a = new VBox();
+		VBox ship4a = new VBox();
 		Button a4 = new Button();
 		Button b4 = new Button();
 		Button c4 = new Button();
 		Button d4 = new Button();
-		space4a.getChildren().addAll(a4,b4,c4,d4);
+		ship4a.getChildren().addAll(a4,b4,c4,d4);
 		
-		VBox space4b = new VBox();
+		VBox ship4b = new VBox();
 		Button a5 = new Button();
 		Button b5 = new Button();
 		Button c5 = new Button();
 		Button d5 = new Button();
-		space4b.getChildren().addAll(a5,b5,c5,d5);
+		ship4b.getChildren().addAll(a5,b5,c5,d5);
 		
-		VBox space5 = new VBox();
+		VBox ship5 = new VBox();
 		Button a6 = new Button();
 		Button b6 = new Button();
 		Button c6 = new Button();
 		Button d6 = new Button();
 		Button e6 = new Button();
-		space4b.getChildren().addAll(a6,b6,c6,d6,e6);
+		ship5.getChildren().addAll(a6,b6,c6,d6,e6);
 		
 		
 		
