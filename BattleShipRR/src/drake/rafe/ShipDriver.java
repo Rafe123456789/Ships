@@ -32,16 +32,16 @@ public class ShipDriver extends Application {
 			buttons.add(arr);
 		}
 		for (int l = 0; l < 18; l++) {
-			for (int u = 0; u < 14; u++) {
+			for (int w = 0; w < 18; w++) {
 				Button b = new Button();
-				b.setStyle("-fx-background-color: #00bfff; -fx-border-color: #000000");
 				b.setPrefSize(50, 50);
-				root.add(root, u, l);
-				buttons.get(u).add(b);
+				root.add(b, l, w);
+				buttons.get(l).add(b);
 			}
+			
 		}
 		
-		
+	
 		root1.getChildren().add(root);
 		
 		Scene scene = new Scene(root1, 700, 900);
