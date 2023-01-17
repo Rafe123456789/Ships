@@ -24,27 +24,53 @@ public class ShipDriver extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// TODO Auto-generated method stub
-		HBox root1 = new HBox();
 		GridPane root = new GridPane();
 		ArrayList<ArrayList<Button>> buttons = new ArrayList<>();
+		ArrayList<Ship> ships = new ArrayList<>();
 		for (int i = 0; i < 18; i++) {
 			ArrayList<Button> arr = new ArrayList<>();
 			buttons.add(arr);
 		}
-		for (int l = 0; l < 18; l++) {
-			for (int w = 0; w < 18; w++) {
+		int o = 1;
+		int y = 1;
+		int u = 1;
+		int e = 1;
+		for (int l = 0; l < 14; l++) {
+			for (int h = 0; h < 18; h++) {
 				Button b = new Button();
 				b.setPrefSize(50, 50);
-				root.add(b, l, w);
+				b.setStyle("-fx-background-color: #0747a1");
+				if ((h <= 7 || h >= 10) && l >= 3 && l <= 10) {
+					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000");
+				}
+				if (l == 3 && ((h > 0 && h < 8))) { 
+					b.setText(String.valueOf((char)(o + 64)));
+					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
+					o++;
+				}
+				if (l == 3 && h > 10) {
+					b.setText(String.valueOf((char)(y + 64)));
+					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
+					y++;
+				}
+				if (h == 0 && (l > 3 && l <= 10)) {
+					b.setText(Integer.toString(u));
+					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
+					u++;
+				}
+				if (h == 10 && (l > 3 && l <= 10)) {
+					b.setText(Integer.toString(e));
+					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
+					e++;
+				}
+				root.add(b, l, h);
 				buttons.get(l).add(b);
 			}
 			
 		}
 		
-	
-		root1.getChildren().add(root);
-		
-		Scene scene = new Scene(root1, 700, 900);
+		createShip(buttons, 1, 2, 2, ships);
+		Scene scene = new Scene(root, 700, 900);
 		
 		
 		
@@ -54,6 +80,16 @@ public class ShipDriver extends Application {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
+	}
+	public static void createShip(ArrayList<ArrayList<Button>> buttons, int x, int y, int size, ArrayList<Ship> ships) {
+		Ship s = new Ship(size);
+		for (int i = 0; i < size; i++) {
+			buttons.get(x).get(y+i).setStyle("-fx-background-color: #777B7E");
+			s.whereShipX(x, 0+i);
+			s.whereShipY(y+i, 0+i);
+		}
+		
+		ships.add(s);
 	}
 
 }
