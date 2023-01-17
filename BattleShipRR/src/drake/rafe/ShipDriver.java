@@ -40,9 +40,7 @@ public class ShipDriver extends Application {
 			}
 			
 		}
-		for (ArrayList<Button> arr: buttons) {
-			System.out.println(arr);
-		}
+		
 	
 		root1.getChildren().add(root);
 		
