@@ -70,6 +70,11 @@ public class ShipDriver extends Application {
 		}
 		
 		createShip(buttons, 1, 2, 2, ships);
+		createShip(buttons, 1, 7, 2, ships);
+		createShip(buttons, 1, 12, 3, ships);
+		createShip(buttons, 12, 4, 3, ships);
+		createShip(buttons, 12, 11, 4, ships);
+		
 		Scene scene = new Scene(root, 700, 900);
 		
 		
