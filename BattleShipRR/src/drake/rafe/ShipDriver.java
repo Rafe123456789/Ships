@@ -77,7 +77,10 @@ public class ShipDriver extends Application {
 		
 		Scene scene = new Scene(root, 700, 900);
 		
-		
+		for (Ship s : ships) {
+			System.out.println(s);
+		}
+		addButtonFunctionShip(ships, buttons);
 		
 		stage.setScene(scene);
 		stage.show();
@@ -95,6 +98,27 @@ public class ShipDriver extends Application {
 		}
 		
 		ships.add(s);
+	}
+	public static void addButtonFunctionShip(ArrayList<Ship> ships, ArrayList<ArrayList<Button>> buttons) {
+		for (Ship s: ships) {
+			for(int i = 0; i < s.getSize(); i++) {
+				int u = i;
+				buttons.get(s.getXCoord(i)).get(s.getYCoord(i)).setOnAction(e -> {
+					if (s.isSelected()) {
+						s.updateSelected();
+						for (int v = 0; v < s.getSize(); v++) {
+							buttons.get(s.getXCoord(v)).get(s.getYCoord(v)).setStyle("-fx-background-color: #777B7E");
+						}
+					} else {
+						s.updateSelected();
+						for (int v = 0; v < s.getSize(); v++) {
+							buttons.get(s.getXCoord(v)).get(s.getYCoord(v)).setStyle("-fx-background-color: #777B7E; -fx-border-color: #e5de00");
+						}
+					}
+					
+				});
+			}
+		}
 	}
 
 }
