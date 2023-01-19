@@ -63,6 +63,12 @@ public class ShipDriver extends Application {
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
 					e++;
 				}
+				if(h == 16 && l ==12) {
+					b.setStyle("-fx-background-color: #FF4500; -fx-font-size:11");
+					
+					b.setText("lock in");
+							
+				}
 				root.add(b, l, h);
 				buttons.get(l).add(b);
 			}

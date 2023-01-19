@@ -1,4 +1,4 @@
-package drake.rafe;
+//package drake.rafe;
 /**
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -69,6 +69,7 @@ public class MoveShips {
 	ship5.getChildren().addAll(a6,b6,c6,d6,e6);
 	ship5.setOnMouseClicked(event -> {
 	    ship5.setRotate(ship5.getRotate() + 90);
+}
 }
 }
 */
