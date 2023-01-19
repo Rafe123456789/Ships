@@ -26,6 +26,9 @@ public class Ship {
 			}
 		}
 	}
+	public boolean getSunk() {
+		return isSunk;
+	}
 	public void isHit(int whereHit) {
 		hit[whereHit] = true;
 	}
@@ -57,5 +60,11 @@ public class Ship {
 			s += " it is currently at the coordinates: (" + Integer.toString(XCoord[i]) + ", " + Integer.toString(YCoord[i]) + "), ";
 		}
 		return s;
+	}
+	public boolean isVertical() {
+		if (YCoord[0] == YCoord[1]) {
+			return true;
+		}
+		return false;
 	}
 }
