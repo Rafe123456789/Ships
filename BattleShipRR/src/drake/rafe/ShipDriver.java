@@ -110,6 +110,14 @@ public class ShipDriver extends Application {
 							buttons.get(s.getXCoord(v)).get(s.getYCoord(v)).setStyle("-fx-background-color: #777B7E");
 						}
 					} else {
+						for (Ship y : ships) {
+							if (y.isSelected()) {
+								y.updateSelected();
+								for (int v = 0; v < y.getSize(); v++) {
+									buttons.get(y.getXCoord(v)).get(y.getYCoord(v)).setStyle("-fx-background-color: #777B7E");
+								}
+							}
+						}
 						s.updateSelected();
 						for (int v = 0; v < s.getSize(); v++) {
 							buttons.get(s.getXCoord(v)).get(s.getYCoord(v)).setStyle("-fx-background-color: #777B7E; -fx-border-color: #e5de00");
