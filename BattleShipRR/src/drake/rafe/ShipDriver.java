@@ -19,6 +19,9 @@ import javafx.stage.Stage;
 
 //Buttons are 50, 50
 //14 button width, 18 button height
+
+//REWRITE ALL THE METHODS WITH NEW PRACTICE OF CHECKING SINGULAR X AND Y AND GOING BASED ON ORIENTATION
+
 public class ShipDriver extends Application {
 
 	@Override
@@ -27,6 +30,7 @@ public class ShipDriver extends Application {
 		GridPane root = new GridPane();
 		ArrayList<ArrayList<Button>> buttons = new ArrayList<>();
 		ArrayList<Ship> ships = new ArrayList<>();
+		
 		for (int i = 0; i < 18; i++) {
 			ArrayList<Button> arr = new ArrayList<>();
 			buttons.add(arr);
@@ -98,11 +102,9 @@ public class ShipDriver extends Application {
 		launch(args);
 	}
 	public static void createShip(ArrayList<ArrayList<Button>> buttons, int x, int y, int size, Player player) {
-		Ship s = new Ship(size);
+		Ship s = new Ship(size, x, y);
 		for (int i = 0; i < size; i++) {
 			buttons.get(x).get(y+i).setStyle("-fx-background-color: #777B7E");
-			s.whereShipX(x, 0+i);
-			s.whereShipY(y+i, 0+i);
 		}
 		
 		player.addShip(s);
@@ -111,24 +113,24 @@ public class ShipDriver extends Application {
 		for (Ship s: playerOne.getShips()) {
 			for(int i = 0; i < s.getSize(); i++) {
 				int u = i;
-				buttons.get(s.getXCoord(i)).get(s.getYCoord(i)).setOnAction(e -> {
+				buttons.get(s.getXCoord()).get(s.getYCoord()).setOnAction(e -> {
 					if (s.isSelected()) {
 						s.updateSelected();
 						for (int v = 0; v < s.getSize(); v++) {
-							buttons.get(s.getXCoord(v)).get(s.getYCoord(v)).setStyle("-fx-background-color: #777B7E");
+							buttons.get(s.getXCoord()).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E");
 						}
 					} else {
 						for (Ship y : playerOne.getShips()) {
 							if (y.isSelected()) {
 								y.updateSelected();
 								for (int v = 0; v < y.getSize(); v++) {
-									buttons.get(y.getXCoord(v)).get(y.getYCoord(v)).setStyle("-fx-background-color: #777B7E");
+									buttons.get(y.getXCoord()).get(y.getYCoord()).setStyle("-fx-background-color: #777B7E");
 								}
 							}
 						}
 						s.updateSelected();
 						for (int v = 0; v < s.getSize(); v++) {
-							buttons.get(s.getXCoord(v)).get(s.getYCoord(v)).setStyle("-fx-background-color: #777B7E; -fx-border-color: #e5de00");
+							buttons.get(s.getXCoord()).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E; -fx-border-color: #e5de00");
 						}
 					}
 					
@@ -140,6 +142,40 @@ public class ShipDriver extends Application {
 		if (playerOne.ifLost()) {
 			won(buttons);
 		}
+		
+		
+		playerTurn(playerTwo, playerOne, buttons);
+		
+	}
+	public static void won(ArrayList<ArrayList<Button>> buttons) {
+		for(ArrayList<Button> arr : buttons) {
+			for (Button b : arr) {
+				b.setStyle("-fx-background-color: #000000");
+			}
+		}
+	}
+	public static void placeShips(ArrayList<ArrayList<Button>> buttons, Player player) {
+		for (int i = 4; i < 11; i++) {
+			for (int y = 11; y <= 17; y++) {
+				int w = i;
+				int z = y;
+				buttons.get(i).get(y).setOnAction(e -> {
+					for (Ship s : player.getShips()) {
+						if (s.isSelected()) {
+							if (s.isVertical()) {
+								System.out.print("mhh");
+								for (int l = 0; l < s.getSize(); l++) {
+									buttons.get(w).get(z-l).setStyle("-fx-background-color: #777B7E");
+									buttons.get(w).get(z-l).setStyle("-fx-background-color: #777B7E");
+								}
+							}
+						}
+					}
+				});
+			}
+		}
+	}
+	public static void colorMap (ArrayList<ArrayList<Button>> buttons, Player player) {
 		int o = 1;
 		int y = 1;
 		int u = 1;
@@ -176,38 +212,15 @@ public class ShipDriver extends Application {
 				}
 			}
 		}
-		for (Ship s: playerOne.getShips()) {
-			for(int i = 0; i < s.getSize(); i++) {
-				buttons.get(s.getXCoord(i)).get(s.getYCoord(i)).setStyle("-fx-background-color: #777B7E");
-			}
-		}
-		
-		playerTurn(playerTwo, playerOne, buttons);
-		
-	}
-	public static void won(ArrayList<ArrayList<Button>> buttons) {
-		for(ArrayList<Button> arr : buttons) {
-			for (Button b : arr) {
-				b.setStyle("-fx-background-color: #000000");
-			}
-		}
-	}
-	public static void placeShips(ArrayList<ArrayList<Button>> buttons, Player player) {
-		for (int i = 4; i < 11; i++) {
-			for (int y = 11; y <= 17; y++) {
-				int w = i;
-				int z = y;
-				buttons.get(i).get(y).setOnAction(e -> {
-					for (Ship s : player.getShips()) {
-						if (s.isSelected()) {
-							if (s.isVertical()) {
-								for (int l = 0; l < s.getSize(); l++) {
-									buttons.get(w-l).get(z).setStyle("-fx-background-color: #777B7E");
-								}
-							}
-						}
-					}
-				});
+		for (Ship s: player.getShips()) {
+			if (s.isVertical()) {
+				for(int i = 0; i < s.getSize(); i++) {
+					buttons.get(s.getXCoord()).get(s.getYCoord()+i).setStyle("-fx-background-color: #777B7E");
+				}
+			} else {
+				for(int i = 0; i < s.getSize(); i++) {
+					buttons.get(s.getXCoord()+i).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E");
+				}
 			}
 		}
 	}

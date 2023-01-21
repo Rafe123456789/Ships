@@ -6,15 +6,16 @@ public class Ship {
 	private int size;
 	private boolean[] hit;
 	private boolean isSunk = false;
-	private int[] XCoord;
-	private int[] YCoord;
+	private int xCoord;
+	private int yCoord;
 	private boolean isSelected = false;;
+	private int orientation = 0;
 	
-	Ship(int n) {
+	Ship(int n, int x, int y) {
 		size = n;
 		hit = new boolean[n];
-		XCoord = new int[n];
-		YCoord = new int[n];
+		xCoord = x;
+		yCoord = y;
 	}
 	public void ifIsSunk() {
 		for (boolean i : hit) {
@@ -32,17 +33,17 @@ public class Ship {
 	public void isHit(int whereHit) {
 		hit[whereHit] = true;
 	}
-	public void whereShipX(int x, int segment) {
-		XCoord[segment] = x;
+	public void updateX(int x) {
+		xCoord = x;
 	}
 	public void whereShipY(int y, int segment) {
-		YCoord[segment] = y;
+		yCoord = y;
 	}
-	public int getXCoord(int location) {
-		return XCoord[location];
+	public int getXCoord() {
+		return xCoord;
 	}
-	public int getYCoord(int location) {
-		return YCoord[location];
+	public int getYCoord() {
+		return yCoord;
 	}
 	public int getSize() {
 		return size;
@@ -56,13 +57,18 @@ public class Ship {
 	@Override
 	public String toString() {
 		String s = "This ship is size: " + size;
-		for (int i = 0; i < XCoord.length; i++) {
-			s += " it is currently at the coordinates: (" + Integer.toString(XCoord[i]) + ", " + Integer.toString(YCoord[i]) + "), ";
+		for (int i = 0; i < size; i++) {
+			if (orientation == 0) {
+				s += " it is currently at the coordinates: (" + Integer.toString(xCoord) + ", " + Integer.toString(yCoord+1) + "), ";
+			} else if (orientation == 1) {
+				s += " it is currently at the coordinates: (" + Integer.toString(xCoord+i) + ", " + Integer.toString(yCoord) + "), ";
+			}
+			
 		}
 		return s;
 	}
 	public boolean isVertical() {
-		if (YCoord[0] == YCoord[1]) {
+		if (orientation == 0) {
 			return true;
 		}
 		return false;
