@@ -36,7 +36,7 @@ public class Ship {
 	public void updateX(int x) {
 		xCoord = x;
 	}
-	public void whereShipY(int y, int segment) {
+	public void updateY(int y) {
 		yCoord = y;
 	}
 	public int getXCoord() {
@@ -59,7 +59,7 @@ public class Ship {
 		String s = "This ship is size: " + size;
 		for (int i = 0; i < size; i++) {
 			if (orientation == 0) {
-				s += " it is currently at the coordinates: (" + Integer.toString(xCoord) + ", " + Integer.toString(yCoord+1) + "), ";
+				s += " it is currently at the coordinates: (" + Integer.toString(xCoord) + ", " + Integer.toString(yCoord-i) + "), ";
 			} else if (orientation == 1) {
 				s += " it is currently at the coordinates: (" + Integer.toString(xCoord+i) + ", " + Integer.toString(yCoord) + "), ";
 			}
@@ -70,6 +70,17 @@ public class Ship {
 	public boolean isVertical() {
 		if (orientation == 0) {
 			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Ship) {
+			Ship s1 = (Ship) obj;
+			if (s1.getSize() == size && s1.getXCoord() == xCoord && s1.getYCoord() == yCoord) {
+				return true;
+			}
 		}
 		return false;
 	}

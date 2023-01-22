@@ -1,6 +1,5 @@
 package drake.rafe;
 
-
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -16,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-
 //Buttons are 50, 50
 //14 button width, 18 button height
 
@@ -30,7 +28,7 @@ public class ShipDriver extends Application {
 		GridPane root = new GridPane();
 		ArrayList<ArrayList<Button>> buttons = new ArrayList<>();
 		ArrayList<Ship> ships = new ArrayList<>();
-		
+
 		for (int i = 0; i < 18; i++) {
 			ArrayList<Button> arr = new ArrayList<>();
 			buttons.add(arr);
@@ -49,13 +47,13 @@ public class ShipDriver extends Application {
 				if ((h <= 7 || h >= 10) && l >= 3 && l <= 10) {
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000");
 				}
-				if (l == 3 && ((h > 0 && h < 8))) { 
-					b.setText(String.valueOf((char)(o + 64)));
+				if (l == 3 && ((h > 0 && h < 8))) {
+					b.setText(String.valueOf((char) (o + 64)));
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
 					o++;
 				}
 				if (l == 3 && h > 10) {
-					b.setText(String.valueOf((char)(y + 64)));
+					b.setText(String.valueOf((char) (y + 64)));
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
 					y++;
 				}
@@ -69,113 +67,123 @@ public class ShipDriver extends Application {
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
 					e++;
 				}
-				if(h == 16 && l ==12) {
+				if (h == 16 && l == 12) {
 					b.setStyle("-fx-background-color: #FF4500; -fx-font-size:11");
-					b.setText("lock in");		
+					b.setText("lock in");
 				}
 				root.add(b, l, h);
 				buttons.get(l).add(b);
 			}
-			
+
 		}
+
+		createShip(1, 2, 2, playerOne);
+		createShip(1, 7, 2, playerOne);
+		createShip(1, 12, 3, playerOne);
+		createShip(12, 4, 3, playerOne);
+		createShip(12, 11, 4, playerOne);
 		
-		createShip(buttons, 1, 2, 2, playerOne);
-		createShip(buttons, 1, 7, 2, playerOne);
-		createShip(buttons, 1, 12, 3, playerOne);
-		createShip(buttons, 12, 4, 3, playerOne);
-		createShip(buttons, 12, 11, 4, playerOne);
-		createShip(buttons, 1, 2, 2, playerTwo);
-		createShip(buttons, 1, 7, 2, playerTwo);
-		createShip(buttons, 1, 12, 3, playerTwo);
-		createShip(buttons, 12, 4, 3, playerTwo);
-		createShip(buttons, 12, 11, 4, playerTwo);
 		Scene scene = new Scene(root, 700, 900);
 		addButtonFunctionShip(playerOne, buttons);
-		placeShips(buttons, playerOne);
-		
-		
+		colorMap(buttons, playerOne);
+
 		stage.setScene(scene);
 		stage.show();
 	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
 	}
-	public static void createShip(ArrayList<ArrayList<Button>> buttons, int x, int y, int size, Player player) {
+//updated
+	public static void createShip(int x, int y, int size, Player player) {
 		Ship s = new Ship(size, x, y);
-		for (int i = 0; i < size; i++) {
-			buttons.get(x).get(y+i).setStyle("-fx-background-color: #777B7E");
-		}
-		
 		player.addShip(s);
 	}
-	public static void addButtonFunctionShip(Player playerOne, ArrayList<ArrayList<Button>> buttons) {
-		for (Ship s: playerOne.getShips()) {
-			for(int i = 0; i < s.getSize(); i++) {
-				int u = i;
-				buttons.get(s.getXCoord()).get(s.getYCoord()).setOnAction(e -> {
-					if (s.isSelected()) {
-						s.updateSelected();
-						for (int v = 0; v < s.getSize(); v++) {
-							buttons.get(s.getXCoord()).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E");
-						}
-					} else {
-						for (Ship y : playerOne.getShips()) {
-							if (y.isSelected()) {
-								y.updateSelected();
-								for (int v = 0; v < y.getSize(); v++) {
-									buttons.get(y.getXCoord()).get(y.getYCoord()).setStyle("-fx-background-color: #777B7E");
+//updated
+	public static void addButtonFunctionShip(Player player, ArrayList<ArrayList<Button>> buttons) {
+		for (int w = 0; w < 13; w++) {
+			for (int h = 0; h < 18; h++) {
+					int u = w;
+					int t = h;
+					buttons.get(w).get(h).setOnAction(e -> {
+						for(Ship s1 : player.getShips()) {
+							if (s1.isSelected() && u > 3 && u < 11 && t > 10) {
+								int x1 = s1.getXCoord();
+								int y1 = s1.getYCoord();
+								if (t < 11 + s1.getSize()) {
+									s1.updateX(u);
+									s1.updateY(t+s1.getSize()-1);
+								} else {
+									s1.updateX(u);
+									s1.updateY(t);
 								}
+								for (Ship s2 : player.getShips()) {
+									for (int i = 0; i < s1.getSize(); i++) {
+										for (int q = 0; q < s2.getSize(); q++) {
+											if (!s1.equals(s2) && s1.getXCoord() == s2.getXCoord() && s1.getYCoord()-i == s2.getYCoord()-q) {
+												s1.updateX(x1);
+												s1.updateY(y1);
+											}
+										}
+									}
+								}
+								s1.updateSelected();
+								colorMap(buttons, player);
 							}
 						}
-						s.updateSelected();
-						for (int v = 0; v < s.getSize(); v++) {
-							buttons.get(s.getXCoord()).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E; -fx-border-color: #e5de00");
-						}
-					}
-					
-				});
+					});
+				
 			}
 		}
+		
+		for (int w = 0; w < 14; w++) {
+			for (int h = 0; h < 18; h++) {
+				for (Ship s : player.getShips()) {
+					if (s.isVertical() && ((s.getXCoord() == w && s.getYCoord() == h) || (s.getXCoord() == w && s.getYCoord()-1 == h) || (s.getXCoord() == w && s.getYCoord()-2 == h && s.getSize() > 2) || (s.getXCoord() == w && s.getYCoord()-3 == h && s.getSize() > 3))) {
+						buttons.get(w).get(h).setOnAction(e -> {
+							
+							if (s.isSelected()) {
+								s.updateSelected();
+								colorMap(buttons, player);
+							} else {
+								for (Ship u : player.getShips()) {
+									if (u.isSelected()) {
+										u.updateSelected();
+									}
+								}
+								s.updateSelected();
+								colorMap(buttons, player);
+							}
+						});
+					} 
+				}
+			}
+			
+		}
+		
 	}
+
 	public static void playerTurn(Player playerOne, Player playerTwo, ArrayList<ArrayList<Button>> buttons) {
 		if (playerOne.ifLost()) {
 			won(buttons);
 		}
-		
-		
+
 		playerTurn(playerTwo, playerOne, buttons);
-		
+
 	}
+
 	public static void won(ArrayList<ArrayList<Button>> buttons) {
-		for(ArrayList<Button> arr : buttons) {
+		for (ArrayList<Button> arr : buttons) {
 			for (Button b : arr) {
 				b.setStyle("-fx-background-color: #000000");
 			}
 		}
 	}
-	public static void placeShips(ArrayList<ArrayList<Button>> buttons, Player player) {
-		for (int i = 4; i < 11; i++) {
-			for (int y = 11; y <= 17; y++) {
-				int w = i;
-				int z = y;
-				buttons.get(i).get(y).setOnAction(e -> {
-					for (Ship s : player.getShips()) {
-						if (s.isSelected()) {
-							if (s.isVertical()) {
-								System.out.print("mhh");
-								for (int l = 0; l < s.getSize(); l++) {
-									buttons.get(w).get(z-l).setStyle("-fx-background-color: #777B7E");
-									buttons.get(w).get(z-l).setStyle("-fx-background-color: #777B7E");
-								}
-							}
-						}
-					}
-				});
-			}
-		}
-	}
-	public static void colorMap (ArrayList<ArrayList<Button>> buttons, Player player) {
+
+	
+
+	public static void colorMap(ArrayList<ArrayList<Button>> buttons, Player player) {
 		int o = 1;
 		int y = 1;
 		int u = 1;
@@ -183,16 +191,17 @@ public class ShipDriver extends Application {
 		for (int l = 0; l < 14; l++) {
 			for (int h = 0; h < 18; h++) {
 				Button b = buttons.get(l).get(h);
+				b.setStyle("-fx-background-color: #0747a1");
 				if ((h <= 7 || h >= 10) && l >= 3 && l <= 10) {
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000");
 				}
-				if (l == 3 && ((h > 0 && h < 8))) { 
-					b.setText(String.valueOf((char)(o + 64)));
+				if (l == 3 && ((h > 0 && h < 8))) {
+					b.setText(String.valueOf((char) (o + 64)));
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
 					o++;
 				}
 				if (l == 3 && h > 10) {
-					b.setText(String.valueOf((char)(y + 64)));
+					b.setText(String.valueOf((char) (y + 64)));
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
 					y++;
 				}
@@ -206,23 +215,29 @@ public class ShipDriver extends Application {
 					b.setStyle("-fx-background-color: #1a8ae5; -fx-border-color: #000000; -fx-font-size: 20px");
 					e++;
 				}
-				if(h == 16 && l ==12) {
+				if (h == 16 && l == 12) {
 					b.setStyle("-fx-background-color: #FF4500; -fx-font-size:11");
-					b.setText("lock in");		
+					b.setText("lock in");
 				}
 			}
 		}
-		for (Ship s: player.getShips()) {
-			if (s.isVertical()) {
-				for(int i = 0; i < s.getSize(); i++) {
-					buttons.get(s.getXCoord()).get(s.getYCoord()+i).setStyle("-fx-background-color: #777B7E");
-				}
-			} else {
-				for(int i = 0; i < s.getSize(); i++) {
-					buttons.get(s.getXCoord()+i).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E");
+		for (Ship s : player.getShips()) {
+			for (int i = 0; i < s.getSize(); i++) {
+				if (s.isVertical()) {
+					if (s.isSelected()) {
+						buttons.get(s.getXCoord()).get(s.getYCoord() - i).setStyle("-fx-background-color: #777B7E; -fx-border-color: #e5de00");
+					} else {
+						buttons.get(s.getXCoord()).get(s.getYCoord() - i).setStyle("-fx-background-color: #777B7E");
+					}
+				} else {
+					if (s.isSelected()) {
+						buttons.get(s.getXCoord()+i).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E; -fx-border-color: #e5de00; -fx-border-color: #e5de00");
+					} else {
+						buttons.get(s.getXCoord()+i).get(s.getYCoord()).setStyle("-fx-background-color: #777B7E");
+					}
 				}
 			}
 		}
+		addButtonFunctionShip(player, buttons);
 	}
-
 }
