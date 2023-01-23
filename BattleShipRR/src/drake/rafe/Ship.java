@@ -8,6 +8,7 @@ public class Ship {
 	private boolean isSunk = false;
 	private int xCoord;
 	private int yCoord;
+	private boolean originalPos = true;
 	private boolean isSelected = false;;
 	private int orientation = 0;
 	
@@ -34,9 +35,11 @@ public class Ship {
 		hit[whereHit] = true;
 	}
 	public void updateX(int x) {
+		originalPos = false;
 		xCoord = x;
 	}
 	public void updateY(int y) {
+		originalPos = false;
 		yCoord = y;
 	}
 	public int getXCoord() {
@@ -81,6 +84,13 @@ public class Ship {
 			if (s1.getSize() == size && s1.getXCoord() == xCoord && s1.getYCoord() == yCoord) {
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	public boolean isOriginal() {
+		if (originalPos) {
+			return true;
 		}
 		return false;
 	}

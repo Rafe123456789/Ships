@@ -1,6 +1,9 @@
 package drake.rafe;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -8,6 +11,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -82,10 +88,14 @@ public class ShipDriver extends Application {
 		createShip(1, 12, 3, playerOne);
 		createShip(12, 4, 3, playerOne);
 		createShip(12, 11, 4, playerOne);
+		createShip(1, 2, 2, playerTwo);
+		createShip(1, 7, 2, playerTwo);
+		createShip(1, 12, 3, playerTwo);
+		createShip(12, 4, 3, playerTwo);
+		createShip(12, 11, 4, playerTwo);
 		
 		Scene scene = new Scene(root, 700, 900);
-		addButtonFunctionShip(playerOne, buttons);
-		colorMap(buttons, playerOne);
+		colorMap(buttons, playerOne, playerTwo, 1);
 
 		stage.setScene(scene);
 		stage.show();
@@ -101,7 +111,7 @@ public class ShipDriver extends Application {
 		player.addShip(s);
 	}
 //updated
-	public static void addButtonFunctionShip(Player player, ArrayList<ArrayList<Button>> buttons) {
+	public static void addButtonFunctionShip(Player player, ArrayList<ArrayList<Button>> buttons, Player playerTwo, int turn) {
 		for (int w = 0; w < 13; w++) {
 			for (int h = 0; h < 18; h++) {
 					int u = w;
@@ -129,7 +139,7 @@ public class ShipDriver extends Application {
 									}
 								}
 								s1.updateSelected();
-								colorMap(buttons, player);
+								colorMap(buttons, player, playerTwo, turn);
 							}
 						}
 					});
@@ -145,7 +155,7 @@ public class ShipDriver extends Application {
 							
 							if (s.isSelected()) {
 								s.updateSelected();
-								colorMap(buttons, player);
+								colorMap(buttons, player, playerTwo, turn);
 							} else {
 								for (Ship u : player.getShips()) {
 									if (u.isSelected()) {
@@ -153,7 +163,7 @@ public class ShipDriver extends Application {
 									}
 								}
 								s.updateSelected();
-								colorMap(buttons, player);
+								colorMap(buttons, player, playerTwo, turn);
 							}
 						});
 					} 
@@ -161,6 +171,17 @@ public class ShipDriver extends Application {
 			}
 			
 		}
+		buttons.get(12).get(16).setOnAction(e -> {
+			boolean o = true;
+			for (Ship s : player.getShips()) {
+				if (s.isOriginal()) {
+					o = false;
+				}
+			}
+			if (o == true) {
+				inBetweenTurns(buttons, player, playerTwo, turn);
+			}
+		});
 		
 	}
 
@@ -183,7 +204,7 @@ public class ShipDriver extends Application {
 
 	
 
-	public static void colorMap(ArrayList<ArrayList<Button>> buttons, Player player) {
+	public static void colorMap(ArrayList<ArrayList<Button>> buttons, Player player, Player playerTwo, int turn) {
 		int o = 1;
 		int y = 1;
 		int u = 1;
@@ -238,6 +259,80 @@ public class ShipDriver extends Application {
 				}
 			}
 		}
-		addButtonFunctionShip(player, buttons);
+		Image image = null;
+		Image image2 = null;
+		try {
+			image = new Image(new FileInputStream("CircleRed.png"));
+			image2 = new Image(new FileInputStream("XRed.png"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("error");
+			e1.printStackTrace();
+		}
+		
+		for (int q = 4; q < 11; q++) {
+			for (int p = 1; p < 8; p++) {
+				if (player.getShot(p-1, q-4) == 0) {
+					buttons.get(q).get(p).setGraphic(null);
+				} else if (player.getShot(p-1, q-4) == 1) {
+					ImageView imageView = new ImageView(image2);
+					buttons.get(q).get(p).setGraphic(imageView);
+				} else if (player.getShot(p-1, q-4) == 2) {
+					ImageView imageView = new ImageView(image);
+					buttons.get(q).get(p).setGraphic(imageView);
+				}
+			}
+		}
+		
+		
+		
+		
+		
+		if (turn > 2) {
+			shootingTurn(buttons, playerTwo, player, turn);
+		} else {
+			addButtonFunctionShip(player, buttons, playerTwo, turn);
+		}
+		
+	}
+	
+	public static void inBetweenTurns(ArrayList<ArrayList<Button>> buttons, Player player, Player playerTwo, int turn) {
+		for (ArrayList<Button> arr : buttons) {
+			for (Button b : arr) {
+				b.setStyle("-fx-background-color: #000000");
+				b.setText("");
+				b.setOnAction(e -> {
+					
+				});
+			}
+		}
+		for (int i = 4; i < 10; i++) {
+			for (int u = 10; u < 12; u++) {
+				buttons.get(i).get(u).setStyle("-fx-background-color: #FFFFFF");
+				buttons.get(i).get(u).setOnAction(e -> {
+					colorMap(buttons, playerTwo, player, turn+1);
+				});
+			}
+		}
+	}
+	public static void shootingTurn(ArrayList<ArrayList<Button>> buttons, Player player, Player playerTwo, int turn) {
+		Button b;
+		for (int i = 4; i < 11; i++) {
+			for (int l = 1; l < 8; l++) {
+				b = buttons.get(i).get(l);
+				int w = i;
+				int u = l;
+				b.setOnAction(e -> {
+					System.out.println(Arrays.deepToString(player.getShots()));
+					player.tempShot(u-1, w-4);
+					System.out.println(Arrays.deepToString(player.getShots()));
+					colorMap(buttons, player, playerTwo, turn);
+				});
+			}
+		}
+		buttons.get(12).get(16).setOnAction(e -> {
+			player.shoot();
+			colorMap(buttons, player, playerTwo, turn);
+		});
 	}
 }
