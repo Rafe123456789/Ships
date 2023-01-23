@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 //Buttons are 50, 50
 //14 button width, 18 button height
 
+//make it so u cant dissapear shoot locations
+
 public class ShipDriver extends Application {
 
 	@Override
@@ -299,6 +301,8 @@ public class ShipDriver extends Application {
 			for (Button b : arr) {
 				b.setStyle("-fx-background-color: #000000");
 				b.setText("");
+				b.setGraphic(null
+						);
 				b.setOnAction(e -> {
 					
 				});
@@ -321,16 +325,14 @@ public class ShipDriver extends Application {
 				int w = i;
 				int u = l;
 				b.setOnAction(e -> {
-					System.out.println(Arrays.deepToString(player.getShots()));
 					player.tempShot(u-1, w-4);
-					System.out.println(Arrays.deepToString(player.getShots()));
 					colorMap(buttons, player, playerTwo, turn);
 				});
 			}
 		}
 		buttons.get(12).get(16).setOnAction(e -> {
 			player.shoot();
-			colorMap(buttons, playerTwo, player, turn+1);
+			inBetweenTurns(buttons, player, playerTwo, turn);
 		});
 	}
 }

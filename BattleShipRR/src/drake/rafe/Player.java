@@ -42,7 +42,9 @@ public class Player {
 				}
 			}
 		}
-		shots[x][y] = 1;
+		if (shots[x][y] != 2) {
+			shots[x][y] = 1;
+		}
 	}
 	public int getShot(int x, int y) {
 		return shots[x][y];
