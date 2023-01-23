@@ -24,8 +24,6 @@ import javafx.stage.Stage;
 //Buttons are 50, 50
 //14 button width, 18 button height
 
-//REWRITE ALL THE METHODS WITH NEW PRACTICE OF CHECKING SINGULAR X AND Y AND GOING BASED ON ORIENTATION
-
 public class ShipDriver extends Application {
 
 	@Override
@@ -289,7 +287,7 @@ public class ShipDriver extends Application {
 		
 		
 		if (turn > 2) {
-			shootingTurn(buttons, playerTwo, player, turn);
+			shootingTurn(buttons, player, playerTwo, turn);
 		} else {
 			addButtonFunctionShip(player, buttons, playerTwo, turn);
 		}
@@ -332,7 +330,7 @@ public class ShipDriver extends Application {
 		}
 		buttons.get(12).get(16).setOnAction(e -> {
 			player.shoot();
-			colorMap(buttons, player, playerTwo, turn);
+			colorMap(buttons, playerTwo, player, turn+1);
 		});
 	}
 }
