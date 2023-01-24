@@ -1,13 +1,22 @@
 package drake.rafe;
 
 import java.util.ArrayList;
-
+/**
+ * Player class
+ * MOdels player and holds player information
+ * @author Rafe and Ethan
+ *
+ */
 public class Player {
 	private ArrayList<Ship> ships;
 	private int[][] shots = new int[7][7]; 
 	Player() {
 		ships = new ArrayList<>();
 	}
+	/**
+	 * Adds ship to player
+	 * @param ship - the ship to be added
+	 */
 	public void addShip(Ship ship) {
 		ships.add(ship);
 	}

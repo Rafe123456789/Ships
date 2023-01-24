@@ -1,7 +1,12 @@
 package drake.rafe;
 
 import java.util.ArrayList;
-
+/**
+ * Ship class
+ * Models ship and holds battleship information
+ * @author Rafe and Ethan
+ * 
+ */
 public class Ship {
 	private int size;
 	private boolean[] hit;
@@ -18,6 +23,9 @@ public class Ship {
 		xCoord = x;
 		yCoord = y;
 	}
+	/**
+	 * Checks if the is sunk
+	 */
 	public void ifIsSunk() {
 		for (boolean i : hit) {
 			if (i == false) {
@@ -28,16 +36,25 @@ public class Ship {
 			}
 		}
 	}
+	
 	public boolean getSunk() {
 		return isSunk;
 	}
 	public void isHit(int whereHit) {
 		hit[whereHit] = true;
 	}
+	/**
+	 * updates the x cord of ship
+	 * @param x - the x level of ship
+	 */
 	public void updateX(int x) {
 		originalPos = false;
 		xCoord = x;
 	}
+	/**
+	 * updates the y cord of the ship
+	 * @param y - the y level of the ship
+	 */
 	public void updateY(int y) {
 		originalPos = false;
 		yCoord = y;

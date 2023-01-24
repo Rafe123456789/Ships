@@ -25,7 +25,12 @@ import javafx.stage.Stage;
 //14 button width, 18 button height
 
 //make it so u cant dissapear shoot locations
-
+/**
+ * Ship Driver
+ * Runs ship and player class to make the game Battleship
+ * @author Rafe and Ethan
+ *
+ */
 public class ShipDriver extends Application {
 
 	@Override
