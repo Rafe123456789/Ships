@@ -266,9 +266,11 @@ public class ShipDriver extends Application {
 		}
 		Image image = null;
 		Image image2 = null;
+		Image image1 = null;
 		try {
 			image = new Image(new FileInputStream("CircleRed.png"));
 			image2 = new Image(new FileInputStream("XRed.png"));
+			image1 = new Image(new FileInputStream("CircleWhite.png"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			System.out.println("error");
@@ -284,6 +286,9 @@ public class ShipDriver extends Application {
 					buttons.get(q).get(p).setGraphic(imageView);
 				} else if (player.getShot(p-1, q-4) == 2) {
 					ImageView imageView = new ImageView(image);
+					buttons.get(q).get(p).setGraphic(imageView);
+				}else if (player.getShot(p-1, q-4) == 3) {
+					ImageView imageView = new ImageView(image1);
 					buttons.get(q).get(p).setGraphic(imageView);
 				}
 			}
@@ -302,6 +307,22 @@ public class ShipDriver extends Application {
 	}
 	
 	public static void inBetweenTurns(ArrayList<ArrayList<Button>> buttons, Player player, Player playerTwo, int turn) {
+		if (turn > 2) {
+		boolean t = true;
+			for (Ship s: playerTwo.getShips()) {
+				for (int i = 0; i < s.getSize(); i++) {
+					if (player.getShot(s.getXCoord()-4, s.getYCoord()-11-i) == 1) {
+						player.shoot(true);
+						t = false;
+						s.isHit(i);
+					}
+				}
+			}
+			if (t) {
+				player.shoot(false);
+			}
+		}
+		
 		for (ArrayList<Button> arr : buttons) {
 			for (Button b : arr) {
 				b.setStyle("-fx-background-color: #000000");
@@ -336,7 +357,6 @@ public class ShipDriver extends Application {
 			}
 		}
 		buttons.get(12).get(16).setOnAction(e -> {
-			player.shoot();
 			inBetweenTurns(buttons, player, playerTwo, turn);
 		});
 	}

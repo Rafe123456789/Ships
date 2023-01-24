@@ -34,11 +34,15 @@ public class Player {
 	public int[][] getShots() {
 		return shots;
 	}
-	public void shoot() {
+	public void shoot(boolean hit) {
 		for (int i = 0; i < 7; i++) {
 			for (int l = 0; l < 7; l++) {
 				if (shots[i][l] == 1) {
-					shots[i][l] = 2;
+					if (hit) {
+						shots[i][l] = 2;
+					} else {
+						shots[i][l] = 3;
+					}
 				}
 			}
 		}
@@ -58,5 +62,6 @@ public class Player {
 	public int getShot(int x, int y) {
 		return shots[x][y];
 	}
+	
 
 }
