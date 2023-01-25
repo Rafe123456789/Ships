@@ -311,7 +311,7 @@ public class ShipDriver extends Application {
 		boolean t = true;
 			for (Ship s: playerTwo.getShips()) {
 				for (int i = 0; i < s.getSize(); i++) {
-					if (player.getShot(s.getXCoord()-4, s.getYCoord()-11-i) == 1) {
+					if (player.getShot(s.getYCoord()-11-i, s.getXCoord()-4) == 1) {
 						player.shoot(true);
 						t = false;
 						s.isHit(i);
