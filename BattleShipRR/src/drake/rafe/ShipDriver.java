@@ -293,7 +293,20 @@ public class ShipDriver extends Application {
 				}
 			}
 		}
-		
+		for (int q = 4; q < 11; q++) {
+			for (int p = 1; p < 8; p++) {
+				if (playerTwo.getShot(p-1, q-4) == 1) {
+					ImageView imageView = new ImageView(image2);
+					buttons.get(q).get(p+10).setGraphic(imageView);
+				} else if (playerTwo.getShot(p-1, q-4) == 2) {
+					ImageView imageView = new ImageView(image);
+					buttons.get(q).get(p+10).setGraphic(imageView);
+				}else if (playerTwo.getShot(p-1, q-4) == 3) {
+					ImageView imageView = new ImageView(image1);
+					buttons.get(q).get(p+10).setGraphic(imageView);
+				}
+			}
+		}
 		
 		
 		
