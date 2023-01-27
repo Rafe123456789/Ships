@@ -55,7 +55,7 @@ public class Player {
 				}
 			}
 		}
-		if (shots[x][y] != 2) {
+		if (shots[x][y] != 2 && shots[x][y] != 3) {
 			shots[x][y] = 1;
 		}
 	}
