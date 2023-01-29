@@ -25,12 +25,6 @@ import javafx.stage.Stage;
 //14 button width, 18 button height
 
 //make it so u cant dissapear shoot locations
-/**
- * Ship Driver
- * Runs ship and player class to make the game Battleship
- * @author Rafe and Ethan
- *
- */
 public class ShipDriver extends Application {
 
 	@Override
@@ -190,19 +184,14 @@ public class ShipDriver extends Application {
 		
 	}
 
-	public static void playerTurn(Player playerOne, Player playerTwo, ArrayList<ArrayList<Button>> buttons) {
-		if (playerOne.ifLost()) {
-			won(buttons);
-		}
-
-		playerTurn(playerTwo, playerOne, buttons);
-
-	}
 
 	public static void won(ArrayList<ArrayList<Button>> buttons) {
 		for (ArrayList<Button> arr : buttons) {
 			for (Button b : arr) {
-				b.setStyle("-fx-background-color: #000000");
+				b.setStyle("-fx-background-color: #FFFFFF");
+				b.setText("");
+				b.setGraphic(null);
+				b.setOnAction(e -> {});
 			}
 		}
 	}
@@ -340,8 +329,7 @@ public class ShipDriver extends Application {
 			for (Button b : arr) {
 				b.setStyle("-fx-background-color: #000000");
 				b.setText("");
-				b.setGraphic(null
-						);
+				b.setGraphic(null);
 				b.setOnAction(e -> {
 					
 				});
@@ -353,6 +341,16 @@ public class ShipDriver extends Application {
 				buttons.get(i).get(u).setOnAction(e -> {
 					colorMap(buttons, playerTwo, player, turn+1);
 				});
+			}
+		}
+		if (player.hasWon()) {
+			for (ArrayList<Button> arr : buttons) {
+				for (Button b : arr) {
+					b.setStyle("-fx-background-color: #FFFFFF");
+					b.setText("");
+					b.setGraphic(null);
+					b.setOnAction(e -> {});
+				}
 			}
 		}
 	}

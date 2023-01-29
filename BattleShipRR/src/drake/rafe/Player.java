@@ -23,14 +23,6 @@ public class Player {
 	public ArrayList<Ship> getShips() {
 		return ships;
 	}
-	public boolean ifLost() {
-		for (Ship s : ships) {
-			if (!s.getSunk()) {
-				return false;
-			}
-		}
-		return true;
-	}
 	public int[][] getShots() {
 		return shots;
 	}
@@ -61,6 +53,20 @@ public class Player {
 	}
 	public int getShot(int x, int y) {
 		return shots[x][y];
+	}
+	public boolean hasWon() {
+		int counter = 0;
+		for (int[] arr : shots) {
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i] == 2) {
+					counter++;
+				}
+			}
+		}
+		if (counter == 14) {
+			return true;
+		}
+		return false;
 	}
 	
 
